@@ -1,0 +1,50 @@
+{
+  "schema_version": "0.3-draft",
+  "case_id": "DEMO-CASE-001",
+  "source": {
+    "mode": "FICTIONAL_DEVELOPMENT_FIXTURE",
+    "reference": "User confirmed fictional Myntra order in chat on 3 October 2026; see phase-02/inputs/confirmed-2026-10-03/input-register.json.",
+    "fictional_case": true
+  },
+  "state_version": 0,
+  "case_state": "not_started",
+  "buyer": {
+    "id": "DEMO-BUYER-01",
+    "alias": "Aarav"
+  },
+  "receiver": {
+    "id": "DEMO-RECEIVER-01",
+    "alias": "Meera",
+    "relationship_in_scenario": "mother",
+    "adult_in_scenario": true
+  },
+  "merchant": {
+    "name": "Myntra",
+    "fictional": false
+  },
+  "order": {
+    "reference": "DEMO-ORDER-001",
+    "parcel_id": "DEMO-PARCEL-001",
+    "description": "Bedsheet",
+    "payment_type": "prepaid",
+    "value_inr": 900,
+    "address_reference": "DEMO-HOME-01",
+    "fictional": true
+  },
+  "carrier": {
+    "proposed_partner": "Delhivery",
+    "waybill": null,
+    "delegated_release_support": "unverified"
+  },
+  "policy_reference": null,
+  "buyer_grant": null,
+  "invitation": null,
+  "receiver_availability": null,
+  "active_attempt": null,
+  "doorstep_willingness": null,
+  "receiver_acknowledgment": null,
+  "unresolved_input_event_ids": [],
+  "carrier_release_decision_ref": null,
+  "handoff_evidence_ref": null,
+  "label_for_recording": "Fictional Myntra order scenario, prepaid INR 900. User-authored out-for-delivery status for 3 October 2026 is not a carrier event. No real merchant integration, consent grant or carrier approval."
+}

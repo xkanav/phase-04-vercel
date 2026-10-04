@@ -1,0 +1,250 @@
+[
+  {
+    "name": "get_parcel_context",
+    "description": "Read the current case, enrolled people, sources and version.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "pattern": "^R(0[1-9]|1[0-8])$"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 360
+        }
+      },
+      "required": [
+        "case_id",
+        "rule_id",
+        "reason"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "transcribe_receiver_audio",
+    "description": "Send registered audio to real Gnani STT; preserve its exact response.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "pattern": "^R(0[1-9]|1[0-8])$"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 360
+        },
+        "audio_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "case_id",
+        "rule_id",
+        "reason",
+        "audio_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "send_message",
+    "description": "Store exact text in an enrolled participant's app inbox; optionally request a human response.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "pattern": "^R(0[1-9]|1[0-8])$"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 360
+        },
+        "expected_state_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "recipient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2400
+        },
+        "purpose": {
+          "enum": [
+            "invite",
+            "clarify",
+            "explain",
+            "update"
+          ]
+        },
+        "response_kind": {
+          "enum": [
+            "none",
+            "text",
+            "invitation",
+            "availability",
+            "doorstep",
+            "receipt_ack"
+          ]
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "case_id",
+        "rule_id",
+        "reason",
+        "expected_state_version",
+        "recipient_id",
+        "text",
+        "purpose",
+        "response_kind"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "wait_for_event",
+    "description": "Suspend for actual external input or an actual clock timeout.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "pattern": "^R(0[1-9]|1[0-8])$"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 360
+        },
+        "event_types": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "buyer_granted",
+              "buyer_revoked",
+              "invitation_responded",
+              "availability_changed",
+              "receiver_audio_uploaded",
+              "receiver_text_received",
+              "doorstep_choice",
+              "attempt_started",
+              "carrier_decision",
+              "carrier_consumed",
+              "handover_observed",
+              "receiver_acknowledged"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 5,
+          "maximum": 300
+        }
+      },
+      "required": [
+        "case_id",
+        "rule_id",
+        "reason",
+        "event_types",
+        "timeout_seconds"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "close_case",
+    "description": "Close only with supported outcome, evidence and notifications.",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "pattern": "^R(0[1-9]|1[0-8])$"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 360
+        },
+        "expected_state_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outcome": {
+          "enum": [
+            "unresolved",
+            "declined",
+            "cancelled",
+            "completed_simulated"
+          ]
+        },
+        "reason_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "case_id",
+        "rule_id",
+        "reason",
+        "expected_state_version",
+        "outcome",
+        "reason_code",
+        "evidence_refs"
+      ],
+      "additionalProperties": false
+    }
+  }
+]
